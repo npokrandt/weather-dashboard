@@ -22,20 +22,95 @@
         <div class="row">
             <!-- on one side: the form for searching cities and the list of previously searched cities -->
             <div class="col-3">
-                <div class="card bg-success p-2">
+                <div class="card p-2 bg-warning">
                     <!-- will modify to the bootstrap version -->
-                    <form action="">
-                        <h4>Search a city below:</h4>
-                        <input type="text">
-                    </form>                
+                    <form>
+                        <label class="form-label fw-bold">Search a city below:</label>
+                        <input type="text" class="form-control border-2" placeholder="Chicago">
+                        <button class="btn btn-danger mt-3">Get Weather</button>
+                    </form>  
+                    <hr>  
+                    <h5 class="fw-bold">Previously searched cities:</h5>
+                    <button class="btn btn-secondary">Madison</button>        
     
-                    <p>this is where the search stuff will go</p>
                 </div>
             </div>
             <!-- on the other: the cards for the current weather display and the 5 day forecast -->
             <div class="col-9">
-                <div class="card bg-primary">
-                    <p>Weather!</p>
+                <div class="card bg-primary d-flex flex-column align-items-center px-2">
+                    <!-- the current weather -->
+                    <div class="card p-1 m-2 w-100">
+                        <h3>City and Date</h3>
+                        <p>Temp</p>
+                        <p>Hum</p>
+                        <p>Wind</p>
+                    </div>
+                    <!-- the 5-day forecast -->
+                    <div class="card m-2 w-100">
+                        <h4>5-Day Forecast:</h4>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col border m-1">
+                                    <!-- date -->
+                                    <p>Date</p>
+                                    <!-- weather symbol -->
+                                    <p>weather symbol</p>
+                                    <!-- temp -->
+                                    <p>temp</p>
+                                    <!--  humidity-->
+                                    <p>humidity</p>
+                                    <!-- eind -->
+                                    <p>wind</p>
+                                </div>
+                                <div class="col border m-1">
+                                    <!-- date -->
+                                    <p>Date</p>
+                                    <!-- weather symbol -->
+                                    <p>weather symbol</p>
+                                    <!-- temp -->
+                                    <p>temp</p>
+                                    <!--  humidity-->
+                                    <p>humidity</p>
+                                    <!-- eind -->
+                                    <p>wind</p>
+                                </div>
+                                <div class="col border m-1">
+                                    <!-- date -->
+                                    <p>Date</p>
+                                    <!-- weather symbol -->
+                                    <p>weather symbol</p>
+                                    <!-- temp -->
+                                    <p>temp</p>
+                                    <!--  humidity-->
+                                    <p>humidity</p>
+                                    <!-- eind -->
+                                    <p>wind</p>
+                                </div>
+                                <div class="col border m-1"><!-- date -->
+                                    <p>Date</p>
+                                    <!-- weather symbol -->
+                                    <p>weather symbol</p>
+                                    <!-- temp -->
+                                    <p>temp</p>
+                                    <!--  humidity-->
+                                    <p>humidity</p>
+                                    <!-- eind -->
+                                    <p>wind</p></div>
+                                <div class="col border m-1">
+                                    <!-- date -->
+                                    <p>Date</p>
+                                    <!-- weather symbol -->
+                                    <p>weather symbol</p>
+                                    <!-- temp -->
+                                    <p>temp</p>
+                                    <!--  humidity-->
+                                    <p>humidity</p>
+                                    <!-- eind -->
+                                    <p>wind</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
