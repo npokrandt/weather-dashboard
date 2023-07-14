@@ -6,6 +6,10 @@ var weatherBtn = document.querySelector("form button")
 var cityInput = document.querySelector("form input")
 var beforeWeatherDiv = document.getElementById("before-weather-div")
 var afterWeatherDiv = document.getElementById("after-weather-div")
+var currentTempEl = document.getElementById("current-temp")
+var currentHumEl = document.getElementById("current-hum")
+var currentWindEl = document.getElementById("current-wind")
+var currentCityEl = document.getElementById("current-city-and-date")
 
 console.log(afterWeatherDiv)
 
@@ -20,7 +24,23 @@ function getWeather(){
         if (data.cod != 200){
             alert("City does not exist in database. Try again")
         } else {
-            console.log(data)
+            //console.log(data.weather[0].icon)
+            beforeWeatherDiv.classList.add("d-none")
+            afterWeatherDiv.classList.remove("d-none")
+            var temp = data.main.temp
+            var humidity = data.main.humidity
+            var wind = data.wind.speed
+            var headline = 'pending...'
+            var cityName = data.name
+            var unixDate = data.dt*1000
+            var date = dayjs(unixDate).format("MM/DD/YYYY")
+            //var icon = data.weather[0].icon
+            headline = cityName + " " + date
+            currentCityEl.innerText = headline
+            currentTempEl.innerText = "Temperature: " + temp + "\u2109"
+            currentHumEl.innerText = "Humidity: " + humidity + "%"
+            currentWindEl.innerHTML = "Wind: " + wind + " MPH"
+            //console.log(temp + " " + humidity + " " + wind)
         }
         
         //now we can get the forecast with the coords given
