@@ -1,3 +1,17 @@
+:root {
+    /* the color of the 5-day forecast boxes */
+    --dark-mode: rgb(1, 1, 69)
+}
+
 body {
-    background-color: lightgreen;
+    background-color: lightblue;
+    font-family: Inconsolata, monospace;
+}
+
+p {
+    margin: 5px 0;
+}
+
+.col {
+    background-color: var(--dark-mode) !important;
 }
