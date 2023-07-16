@@ -16,8 +16,16 @@ console.log(afterWeatherDiv)
 
 //functions
 function getWeather(){
+
     var city = cityInput.value
-    fetch('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=' + apiKey).then(function(response){
+    //get both at once
+    //getCurrentWeather(city)
+    getFiveDayForecast(city)
+}
+
+function getCurrentWeather(city){
+    fetch('https://api.openweathermap.org/data/2.5/weather?q=' + city + '&units=imperial&appid=' + apiKey)
+    .then(function(response){
         //console.log(response)
         return response.json()
     }) 
@@ -46,11 +54,37 @@ function getWeather(){
             currentWindEl.innerHTML = "Wind: " + wind + " MPH"
             //console.log(temp + " " + humidity + " " + wind)
         }
-        
-        //now we can get the forecast with the coords given
-        //getForecast(lat, lon)
+
     })
     //console.log("weather!")
+}
+
+function getFiveDayForecast(city){
+    fetch('https://api.openweathermap.org/data/2.5/forecast?q=' + city + '&units=imperial&appid=' + apiKey)
+    .then(function(response){
+        //console.log(response)
+        return response.json()
+    }).then(function(data){
+        var firstItem = data.list[0]
+        //start from noon of tomorrow
+        var noonID = 0
+        var dateAndTime = firstItem.dt_txt.split(' ')
+        console.log(dateAndTime[0])
+        var date = dateAndTime[0]
+        var time = dateAndTime[1]
+        var today = dayjs().format('YYYY-MM-DD')
+        while(today == date || time != "12:00:00"){
+
+        }
+        // for (var i = 1; i <= 5; i++){
+        //     createForecast(data, i)
+        // }
+
+    })
+}
+
+function createForecast(data, dayNum){
+    console.log(data.list[dayNum])
 }
 
 //event listeners
