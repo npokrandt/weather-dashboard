@@ -10,6 +10,7 @@ var currentTempEl = document.getElementById("current-temp")
 var currentHumEl = document.getElementById("current-hum")
 var currentWindEl = document.getElementById("current-wind")
 var currentCityEl = document.getElementById("current-city-and-date")
+var currentIconEl = document.getElementById("current-weather-icon")
 
 console.log(afterWeatherDiv)
 
@@ -34,7 +35,10 @@ function getWeather(){
             var cityName = data.name
             var unixDate = data.dt*1000
             var date = dayjs(unixDate).format("MM/DD/YYYY")
-            //var icon = data.weather[0].icon
+            var icon = data.weather[0].icon
+            //the link to the weather icon
+            var iconHref = 'https://openweathermap.org/img/wn/' + icon + '@2x.png'
+            currentIconEl.src = iconHref
             headline = cityName + " " + date
             currentCityEl.innerText = headline
             currentTempEl.innerText = "Temperature: " + temp + "\u2109"
