@@ -4,6 +4,8 @@ var apiKey = '7a4e76b338bbea8e2f0fabe191563e3b'
 
 var weatherBtn = document.querySelector("form button")
 var cityInput = document.querySelector("form input")
+//this works to grab the div with th form because it is the first one with that background
+var secondaryButtonsDiv = document.querySelector("div .bg-info")
 var beforeWeatherDiv = document.getElementById("before-weather-div")
 var afterWeatherDiv = document.getElementById("after-weather-div")
 var currentTempEl = document.getElementById("current-temp")
@@ -12,15 +14,34 @@ var currentWindEl = document.getElementById("current-wind")
 var currentCityEl = document.getElementById("current-city-and-date")
 var currentIconEl = document.getElementById("current-weather-icon")
 
-console.log(afterWeatherDiv)
+//console.log(afterWeatherDiv)
 
 //functions
-function getWeather(){
+function loadCities(){
+    //load the cities from storage
+    //<button class="btn btn-secondary m-1">Madison</button>  
+}
 
-    var city = cityInput.value
+function getWeather(event){
+
+    var city = getCityName(event)
+    
     //get both at once
     getCurrentWeather(city)
     getFiveDayForecast(city)
+}
+
+//there are 2 ways to get the name of the city
+function getCityName(event){
+    //the first iteration will run if the user pushes the city button
+    //the other one will run if the user pushes the weather button 
+    var city
+    if (event.target.matches(".btn-secondary")){
+        city = event.target.innerHTML
+    } else {
+        city = cityInput.value
+    }
+    return city
 }
 
 function getCurrentWeather(city){
@@ -130,5 +151,7 @@ function createForecast(data, dayNum, dayNumAtNoon){
 
 //event listeners
 weatherBtn.addEventListener('click', getWeather)
+secondaryButtonsDiv.addEventListener('click', getWeather)
+
 
 //there will be one for the saved city buttons
