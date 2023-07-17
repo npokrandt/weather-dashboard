@@ -17,9 +17,11 @@ console.log(afterWeatherDiv)
 //functions
 function getWeather(){
 
+    beforeWeatherDiv.classList.add("d-none")
+    afterWeatherDiv.classList.remove("d-none")
     var city = cityInput.value
     //get both at once
-    //getCurrentWeather(city)
+    getCurrentWeather(city)
     getFiveDayForecast(city)
 }
 
@@ -34,8 +36,6 @@ function getCurrentWeather(city){
             alert("City does not exist in database. Try again")
         } else {
             //console.log(data.weather[0].icon)
-            beforeWeatherDiv.classList.add("d-none")
-            afterWeatherDiv.classList.remove("d-none")
             var temp = data.main.temp
             var humidity = data.main.humidity
             var wind = data.wind.speed
@@ -65,17 +65,10 @@ function getFiveDayForecast(city){
         //console.log(response)
         return response.json()
     }).then(function(data){
-        var firstItem = data.list[0]
+        
         //start from noon of tomorrow
-        var noonID = 0
-        var dateAndTime = firstItem.dt_txt.split(' ')
-        console.log(dateAndTime[0])
-        var date = dateAndTime[0]
-        var time = dateAndTime[1]
-        var today = dayjs().format('YYYY-MM-DD')
-        while(today == date || time != "12:00:00"){
-
-        }
+        var dayID = getNoonId(data)
+        createForecast(data, 1, dayID)
         // for (var i = 1; i <= 5; i++){
         //     createForecast(data, i)
         // }
@@ -83,8 +76,56 @@ function getFiveDayForecast(city){
     })
 }
 
-function createForecast(data, dayNum){
-    console.log(data.list[dayNum])
+function getNoonId(data){
+    //start from noon of tomorrow
+    var noonID = 0
+    var dateAndTime
+    //console.log(dateAndTime[0])
+    var date
+    var time
+    var today = dayjs().format('YYYY-MM-DD')
+    while(today == date || time != "12:00:00"){
+        //console.log(data.list[noonID])
+        dateAndTime = data.list[noonID].dt_txt.split(' ')
+        date = dateAndTime[0]
+        time = dateAndTime[1]
+        noonID++
+    }
+    noonID--
+    
+    //if it's before 9am, the forecast will include today
+    if (noonID > 7){
+        noonID -= 8
+    }
+    console.log(noonID)
+    return noonID
+}
+
+function createForecast(data, dayNum, dayNumAtNoon){
+
+    for (var i = dayNumAtNoon; i < 40; i += 8){
+        console.log(data.list[i])
+        //the elements, which will be decided by the dayNum number
+        var forecastDateEl = document.getElementById('day' + dayNum + '-date')
+        var forecastIconEl = document.getElementById('day' + dayNum + '-icon')
+        var forecastTempEl = document.getElementById('day' + dayNum + '-temp')
+        var forecastHumidityEl = document.getElementById('day' + dayNum + '-hum')
+        var forecastWindEl = document.getElementById('day' + dayNum + '-wind')
+
+        var forecastDate = 'test'
+        var forecastIcon = 'test'
+        //what the temp will be at noon
+        var forecastTemp = 'test'
+        var forecastHumidity = 'test'
+        var forecastWind = 'test'
+
+        forecastDateEl.innerText = forecastDate
+        forecastIconEl.src = forecastIcon
+        forecastTempEl.innerText = forecastTemp
+        forecastHumidityEl.innerText = forecastHumidity
+        forecastWindEl.innerText = forecastWind
+        dayNum++
+    }
 }
 
 //event listeners
