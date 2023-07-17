@@ -17,8 +17,6 @@ console.log(afterWeatherDiv)
 //functions
 function getWeather(){
 
-    beforeWeatherDiv.classList.add("d-none")
-    afterWeatherDiv.classList.remove("d-none")
     var city = cityInput.value
     //get both at once
     getCurrentWeather(city)
@@ -65,7 +63,8 @@ function getFiveDayForecast(city){
         //console.log(response)
         return response.json()
     }).then(function(data){
-        
+        beforeWeatherDiv.classList.add("d-none")
+        afterWeatherDiv.classList.remove("d-none")
         //start from noon of tomorrow
         var dayID = getNoonId(data)
         createForecast(data, 1, dayID)
@@ -97,14 +96,13 @@ function getNoonId(data){
     if (noonID > 7){
         noonID -= 8
     }
-    console.log(noonID)
     return noonID
 }
 
 function createForecast(data, dayNum, dayNumAtNoon){
 
     for (var i = dayNumAtNoon; i < 40; i += 8){
-        console.log(data.list[i])
+        var dayNumData = data.list[i]
         //the elements, which will be decided by the dayNum number
         var forecastDateEl = document.getElementById('day' + dayNum + '-date')
         var forecastIconEl = document.getElementById('day' + dayNum + '-icon')
@@ -112,12 +110,14 @@ function createForecast(data, dayNum, dayNumAtNoon){
         var forecastHumidityEl = document.getElementById('day' + dayNum + '-hum')
         var forecastWindEl = document.getElementById('day' + dayNum + '-wind')
 
-        var forecastDate = 'test'
-        var forecastIcon = 'test'
+        var forecastDateAPI = dayNumData.dt_txt.split(' ')[0]
+        var forecastDate = dayjs(forecastDateAPI).format('MM/DD/YYYY')
+        var icon = dayNumData.weather[0].icon
+        var forecastIcon = 'https://openweathermap.org/img/wn/' + icon + '@2x.png'
         //what the temp will be at noon
-        var forecastTemp = 'test'
-        var forecastHumidity = 'test'
-        var forecastWind = 'test'
+        var forecastTemp = "Temp: " + dayNumData.main.temp + "\u2109"
+        var forecastHumidity = "Humidity: " + dayNumData.main.humidity + "%"
+        var forecastWind = "Wind: " + dayNumData.wind.speed + " MPH"
 
         forecastDateEl.innerText = forecastDate
         forecastIconEl.src = forecastIcon
