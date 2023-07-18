@@ -2,8 +2,16 @@
 // global variables
 var apiKey = '7a4e76b338bbea8e2f0fabe191563e3b'
 
+var cities = JSON.parse(localStorage.getItem('cities'))
+//add cities to local storage if it isn't already there
+if (cities === null){
+    cities = []
+    localStorage.setItem("cities", JSON.stringify(cities))
+}
+
 var weatherBtn = document.querySelector("form button")
 var cityInput = document.querySelector("form input")
+var cityButtonDiv = document.getElementById("previous-city-buttons")
 var beforeWeatherDiv = document.getElementById("before-weather-div")
 var afterWeatherDiv = document.getElementById("after-weather-div")
 var currentTempEl = document.getElementById("current-temp")
@@ -12,15 +20,45 @@ var currentWindEl = document.getElementById("current-wind")
 var currentCityEl = document.getElementById("current-city-and-date")
 var currentIconEl = document.getElementById("current-weather-icon")
 
-console.log(afterWeatherDiv)
-
+//console.log(afterWeatherDiv)
+loadCities()
 //functions
-function getWeather(){
+function loadCities(){
+    //load the cities from storage
+    for (var i = 0; i < cities.length; i++){
+        var newButton = document.createElement("button")
+        newButton.classList.add("btn", "btn-secondary", "m-1", "w-100")
+        newButton.innerText = cities[i]
+        cityButtonDiv.appendChild(newButton)
+    }
+}
 
-    var city = cityInput.value
+function getWeather(event){
+
+    var city = getCityName(event)
+    city = city[0].toUpperCase() + city.substring(1)
+    console.log(city)
+
     //get both at once
     getCurrentWeather(city)
     getFiveDayForecast(city)
+
+    //add city as previously seen city, if it hasn't been already
+    addPreviousCity(city)
+}
+
+//there are 2 ways to get the name of the city
+function getCityName(event){
+    //the first iteration will run if the user pushes the city button
+    //the other one will run if the user pushes the weather button 
+    var city
+    if (event.target.matches(".btn-secondary")){
+        city = event.target.innerHTML
+        console.log("test")
+    } else {
+        city = cityInput.value
+    }
+    return city
 }
 
 function getCurrentWeather(city){
@@ -128,7 +166,31 @@ function createForecast(data, dayNum, dayNumAtNoon){
     }
 }
 
+function addPreviousCity(city){
+    var isNewCity = true
+    //check if the city already exists
+    for (var i = 0; i < cities.length;i++){
+        if (cities[i] === city){
+            isNewCity = false
+            break;
+        }
+    }
+
+    if (isNewCity){
+        addCity(city)
+    }
+}
+
+function addCity(city){
+    var newButton = document.createElement("button")
+    newButton.classList.add("btn", "btn-secondary", "m-1", "w-100")
+    newButton.innerText = city
+    cityButtonDiv.appendChild(newButton)
+
+    cities.push(city)
+    localStorage.setItem("cities", JSON.stringify(cities))
+}
+
 //event listeners
 weatherBtn.addEventListener('click', getWeather)
-
-//there will be one for the saved city buttons
+cityButtonDiv.addEventListener('click', getWeather)

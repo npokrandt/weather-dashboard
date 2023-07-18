@@ -26,15 +26,17 @@
             <!-- on one side: the form for searching cities and the list of previously searched cities -->
             <div class="col-3">
                 <div class="card p-2 bg-info text-light">
-                    <!-- will modify to the bootstrap version -->
                     <form>
                         <label class="form-label fw-bold">Search a city below:</label>
                         <input type="text" class="form-control border-2" placeholder="Chicago">
                         <button type="button" class="btn btn-primary mt-3">Get Weather</button>
                     </form>  
                     <hr>  
-                    <h5 class="fw-bold">Previously searched cities:</h5>
-                    <button class="btn btn-secondary">Madison</button>        
+                    <h5 class="fw-bold">Previously searched cities:</h5>   
+                    <!-- the parent to all the city buttons -->
+                    <div id="previous-city-buttons" class="d-flex flex-column align-items-center xx">
+
+                    </div>
     
                 </div>
             </div>
