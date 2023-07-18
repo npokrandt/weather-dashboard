@@ -25,14 +25,20 @@ loadCities()
 //functions
 function loadCities(){
     //load the cities from storage
-    //<button class="btn btn-secondary m-1">Madison</button>  
+    for (var i = 0; i < cities.length; i++){
+        var newButton = document.createElement("button")
+        newButton.classList.add("btn", "btn-secondary", "m-1", "w-100")
+        newButton.innerText = cities[i]
+        cityButtonDiv.appendChild(newButton)
+    }
 }
 
 function getWeather(event){
 
-    console.log("test")
     var city = getCityName(event)
-    
+    city = city[0].toUpperCase() + city.substring(1)
+    console.log(city)
+
     //get both at once
     getCurrentWeather(city)
     getFiveDayForecast(city)
@@ -176,7 +182,6 @@ function addPreviousCity(city){
 }
 
 function addCity(city){
-     //<button class="btn btn-secondary m-1">Madison</button>  
     var newButton = document.createElement("button")
     newButton.classList.add("btn", "btn-secondary", "m-1", "w-100")
     newButton.innerText = city
