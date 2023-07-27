@@ -2,6 +2,8 @@
 // global variables
 var apiKey = '7a4e76b338bbea8e2f0fabe191563e3b'
 
+// localStorage.clear()
+
 var cities = JSON.parse(localStorage.getItem('cities'))
 //add cities to local storage if it isn't already there
 if (cities === null){
@@ -41,10 +43,6 @@ function getWeather(event){
 
     //get both at once
     getCurrentWeather(city)
-    getFiveDayForecast(city)
-
-    //add city as previously seen city, if it hasn't been already
-    addPreviousCity(city)
 }
 
 //there are 2 ways to get the name of the city
@@ -71,7 +69,10 @@ function getCurrentWeather(city){
         if (data.cod != 200){
             alert("City does not exist in database. Try again")
         } else {
-            //console.log(data.weather[0].icon)
+            getFiveDayForecast(city)
+
+            //add city as previously seen city, if it hasn't been already
+            addPreviousCity(city)
             var temp = data.main.temp
             var humidity = data.main.humidity
             var wind = data.wind.speed
